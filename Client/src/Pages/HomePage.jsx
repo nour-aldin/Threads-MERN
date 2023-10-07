@@ -1,10 +1,11 @@
-import { Button, Flex, Spinner } from "@chakra-ui/react"
+import { Box, Button, Flex, Spinner } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import useShowToast from "../Hooks/useShowToast"
 import Post from "../Components/Post"
 import { useRecoilState } from "recoil"
 import postsAtom from "../atoms/postsAtom"
+import { SuggetedUsers } from "../Components/SuggetedUsers"
 
 const HomePage = () => {
   const [posts, setPosts] = useRecoilState(postsAtom)
@@ -36,18 +37,25 @@ const HomePage = () => {
   // )
 
   return (
-    <>
-      {isLoading && (
-        <Flex justifyContent="center">
-          <Spinner size="xl" />
-        </Flex>
-      )}
-      {!isLoading && posts.length === 0 && <h1>Follow some Users to see the feed</h1>}
+    <Flex gap='10' alignItems='flex-start'>
+      <Box flex='70'>
+        {isLoading && (
+          <Flex justifyContent='center'>
+            <Spinner size='xl' />
+          </Flex>
+        )}
+        {!isLoading && posts.length === 0 && (
+          <h1>Follow some Users to see the feed</h1>
+        )}
 
-      {posts.map(post => (
-        <Post key={post._id} post={post} />
-      ))}
-    </>
+        {posts.map((post) => (
+          <Post key={post._id} post={post} />
+        ))}
+      </Box>
+      <Box flex='30'>
+        <SuggetedUsers />
+      </Box>
+    </Flex>
   )
 }
 export default HomePage
