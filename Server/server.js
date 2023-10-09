@@ -30,7 +30,13 @@ mongoose
     console.log(err)
   })
 
-app.use(cors()) // Enable CORS for all routes.
+app.use(
+  cors({
+    origin: "https://threads-mern-one.vercel.app", // Replace with your frontend's URL
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true, // Enable passing of cookies, if necessary
+  })
+)
 app.use(express.json({ limit: "50mb" })) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // to parse form data.
 app.use(cookieParser())
