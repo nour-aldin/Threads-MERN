@@ -16,7 +16,7 @@ import {
 import { BsInstagram } from "react-icons/bs"
 import { CgMoreO } from "react-icons/cg"
 import { useRecoilValue } from "recoil"
-import userAtom from "../Atoms/userAtom"
+import userAtom from "../atoms/userAtom"
 import { Link as RouterLink } from "react-router-dom"
 import { useState } from "react"
 import useShowToast from "../Hooks/useShowToast"
@@ -43,9 +43,9 @@ const UserHeader = ({ user }) => {
   }
 
   const handleFollow = async () => {
-
-    if(!currentUser) return showToast("Error", "Please login to follow", "error")
-    if(isUpdating) return
+    if (!currentUser)
+      return showToast("Error", "Please login to follow", "error")
+    if (isUpdating) return
 
     setIsUpdating(true)
 
@@ -55,7 +55,6 @@ const UserHeader = ({ user }) => {
         headers: {
           "Content-Type": "application/json",
         },
-
       })
       const data = await res.json()
       if (data.error) {
@@ -63,7 +62,7 @@ const UserHeader = ({ user }) => {
       }
       if (isFollowing) {
         showToast("Success", `Unfollowed ${user.name}`, "success")
-        user.followers = user.followers.filter(id => id !== currentUser?._id)
+        user.followers = user.followers.filter((id) => id !== currentUser?._id)
       } else {
         showToast("Success", `Followed ${user.name}`, "success")
         user.followers.push(currentUser?._id)
@@ -118,7 +117,9 @@ const UserHeader = ({ user }) => {
         </RouterLink>
       )}
       {currentUser?._id !== user._id && (
-          <Button size='sm' onClick={handleFollow} isLoading={isUpdating}>{isFollowing ? "Unfollow" : "Follow"}</Button>
+        <Button size='sm' onClick={handleFollow} isLoading={isUpdating}>
+          {isFollowing ? "Unfollow" : "Follow"}
+        </Button>
       )}
       <Flex w='full' justifyContent='space-between'>
         <Flex gap='2' alignItems='center'>

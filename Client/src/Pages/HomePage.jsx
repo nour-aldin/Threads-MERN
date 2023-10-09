@@ -1,6 +1,5 @@
-import { Box, Button, Flex, Spinner } from "@chakra-ui/react"
+import { Box, Flex, Spinner } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
 import useShowToast from "../Hooks/useShowToast"
 import Post from "../Components/Post"
 import { useRecoilState } from "recoil"

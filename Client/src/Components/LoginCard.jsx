@@ -1,5 +1,3 @@
-"use client"
-
 import {
   Flex,
   Box,
@@ -34,7 +32,7 @@ export default function LoginCard() {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleLogin = async () => {
-    if(isLoading) return
+    if (isLoading) return
     setIsLoading(true)
     try {
       const res = await fetch("/api/users/login", {
@@ -78,16 +76,22 @@ export default function LoginCard() {
           <Stack spacing={4}>
             <FormControl isRequired>
               <FormLabel>User Name</FormLabel>
-              <Input type='text' 
-                onChange={e => setInputs({...inputs, userName: e.target.value})}
+              <Input
+                type='text'
+                onChange={(e) =>
+                  setInputs({ ...inputs, userName: e.target.value })
+                }
                 value={inputs.userName}
               />
             </FormControl>
             <FormControl isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? "text" : "password"} 
-                  onChange={e => setInputs({...inputs, password: e.target.value})}
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  onChange={(e) =>
+                    setInputs({ ...inputs, password: e.target.value })
+                  }
                   value={inputs.password}
                 />
                 <InputRightElement h={"full"}>

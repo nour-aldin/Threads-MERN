@@ -1,6 +1,6 @@
 import { Button, Flex, Image, Link, useColorMode } from "@chakra-ui/react"
 import { useRecoilValue, useSetRecoilState } from "recoil"
-import userAtom from "../Atoms/userAtom"
+import userAtom from "../atoms/userAtom"
 import { Link as routerLink } from "react-router-dom"
 import { AiFillHome } from "react-icons/ai"
 import { RxAvatar } from "react-icons/rx"
@@ -13,7 +13,7 @@ const Header = () => {
   const user = useRecoilValue(userAtom)
   const setAuthScreen = useSetRecoilState(authScreenAtom)
   const logout = useLogout()
-  
+
   return (
     <Flex justifyContent='space-between' mt={6} mb={12}>
       {user && (
@@ -22,7 +22,7 @@ const Header = () => {
         </Link>
       )}
       {!user && (
-        <Link as={routerLink} to='auth' onClick={() => setAuthScreen('login')}>
+        <Link as={routerLink} to='auth' onClick={() => setAuthScreen("login")}>
           Login
         </Link>
       )}
@@ -35,7 +35,7 @@ const Header = () => {
         onClick={toggleColorMode}
       />
       {user && (
-        <Flex alignItems={'center'} gap={4}>
+        <Flex alignItems={"center"} gap={4}>
           <Link as={routerLink} to={`/${user.userName}`}>
             <RxAvatar size='24' />
           </Link>
@@ -45,7 +45,11 @@ const Header = () => {
         </Flex>
       )}
       {!user && (
-        <Link as={routerLink} to='/auth' onClick={() => setAuthScreen('register')}>
+        <Link
+          as={routerLink}
+          to='/auth'
+          onClick={() => setAuthScreen("register")}
+        >
           Signup
         </Link>
       )}
