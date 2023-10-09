@@ -5,43 +5,12 @@ import cookieParser from "cookie-parser"
 import { v2 as cloudinary } from "cloudinary"
 import userRoutes from "./Routes/userRoutes.js"
 import postRoutes from "./Routes/postRoutes.js"
+import cors from "cors"
 
 dotenv.config()
 const app = express()
 
 const PORT = process.env.PORT || 8000
-
-/**
- *  cross-origin configuration
- *  prevents cross origin error and preflight error
- */
-import cors from "cors"
-const prodOrigins = [
-  getEnvironmentVariable("ORIGIN_1"),
-  getEnvironmentVariable("ORIGIN_2"),
-  getEnvironmentVariable("ORIGIN_3"),
-]
-const devOrigin = ["http://localhost:3000"]
-const allowedOrigins =
-  getEnvironmentVariable("NODE_ENV") === "production" ? prodOrigins : devOrigin
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (getEnvironmentVariable("NODE_ENV") === "production") {
-        if (!origin || allowedOrigins.includes(origin)) {
-          callback(null, true)
-        } else {
-          callback(new Error(`${origin} not allowed by cors`))
-        }
-      } else {
-        callback(null, true)
-      }
-    },
-    optionsSuccessStatus: 200,
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
-)
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -61,6 +30,7 @@ mongoose
     console.log(err)
   })
 
+app.use(cors()) // Enable CORS for all routes.
 app.use(express.json({ limit: "50mb" })) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // to parse form data.
 app.use(cookieParser())
