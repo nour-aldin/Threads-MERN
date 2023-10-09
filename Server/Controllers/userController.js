@@ -1,4 +1,4 @@
-import User from "../models/userModel.js"
+import User from "../Models/userModel.js"
 import Post from "../Models/postModel.js"
 import bcrypt from "bcrypt"
 import generateTokenAndSetCookie from "../Helpers/generateTokenAndSetCookie.js"
