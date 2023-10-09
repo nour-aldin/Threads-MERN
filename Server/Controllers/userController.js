@@ -1,5 +1,5 @@
 import User from "../models/userModel.js"
-import Post from '../Models/postModel.js'
+import Post from "../Models/postModel.js"
 import bcrypt from "bcrypt"
 import generateTokenAndSetCookie from "../Helpers/generateTokenAndSetCookie.js"
 import { v2 as cloudinary } from "cloudinary"
@@ -162,7 +162,6 @@ const updateUser = async (req, res) => {
       { arrayFilters: [{ "reply.userId": userId }] }
     )
 
-
     user.password = null
     res.status(200).json({ message: "User Updated Successfully", user: user })
   } catch (error) {
@@ -195,6 +194,31 @@ const getUserProfile = async (req, res) => {
   }
 }
 
+const geSuggetedUsers = async (req, res) => {
+  try {
+    const userId = req.user._id
+    const usersFollowedByYou = await User.findById(userId).select("following")
+
+    const users = await User.aggregate([
+      { $match: { _id: { $ne: userId } } },
+      { $sample: { size: 10 } },
+    ])
+    const filteredUsers = users.filter(
+      (user) => !usersFollowedByYou.following.includes(user._id)
+    )
+    const suggetedUsers = filteredUsers.slice(0, 4)
+
+    suggetedUsers.forEach((user) => (user.password = null))
+
+    res
+      .status(200)
+      .json({ message: "Suggeted users found", users: suggetedUsers })
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+    console.log("Error in geSuggetedUsers: ", error.message)
+  }
+}
+
 export {
   signupUser,
   loginUser,
@@ -202,4 +226,5 @@ export {
   followUnfollowUser,
   updateUser,
   getUserProfile,
+  geSuggetedUsers,
 }

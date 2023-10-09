@@ -10,7 +10,7 @@ import { SuggetedUsers } from "../Components/SuggetedUsers"
 const HomePage = () => {
   const [posts, setPosts] = useRecoilState(postsAtom)
   const [isLoading, setIsLoading] = useState(true)
-
+  const [suggestedUsers, setSuggestedUsers] = useState([])
   const showToast = useShowToast()
 
   useEffect(() => {
@@ -22,13 +22,25 @@ const HomePage = () => {
         const data = await res.json()
         if (data.error) return showToast("Error", data.error, "error")
         setPosts(data.feedPosts)
-        console.log(posts)
+        // console.log(posts)
       } catch (error) {
         showToast("Error", error.message, "error")
       } finally {
         setIsLoading(false)
       }
     }
+    const geSuggetedUsers = async () => {
+      try {
+        const response = await fetch("/api/users/suggetedUsers")
+        const data = await response.json()
+        if (data.error) return showToast("Error", data.error, "error")
+        setSuggestedUsers(data.users)
+        // console.log(data.users)
+      } catch (error) {
+        showToast("Error", error.message, "error")
+      }
+    }
+    geSuggetedUsers()
     getFeedPosts()
   }, [setPosts])
 
@@ -44,7 +56,7 @@ const HomePage = () => {
             <Spinner size='xl' />
           </Flex>
         )}
-        {!isLoading && posts.length === 0 && (
+        {!isLoading && posts?.length === 0 && (
           <h1>Follow some Users to see the feed</h1>
         )}
 
@@ -53,7 +65,7 @@ const HomePage = () => {
         ))}
       </Box>
       <Box flex='30'>
-        <SuggetedUsers />
+        <SuggetedUsers users={suggestedUsers} />
       </Box>
     </Flex>
   )

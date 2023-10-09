@@ -5,13 +5,15 @@ import {
   logoutUser,
   followUnfollowUser,
   updateUser,
-  getUserProfile
+  getUserProfile,
+  geSuggetedUsers,
 } from "../Controllers/userController.js"
 import protectRoute from "../Middlewares/protectRoute.js"
 
 const router = express.Router()
 
-router.get('/profile/:query', getUserProfile)
+router.get("/profile/:query", getUserProfile)
+router.get("/suggetedUsers", protectRoute, geSuggetedUsers)
 // REGISTER
 router.post("/register", signupUser)
 // LOGIN
