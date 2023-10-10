@@ -17,20 +17,20 @@ const UserPage = () => {
 
   useEffect(() => {
     const getPosts = async () => {
-    setIsFetchingPosts(true)
-    try {
-      const res = await fetch(`/api/posts/user/${userName}`)
-      const data = await res.json()
-      if (data.error) {
-        return showToast("Error", data.error, "error")
+      setIsFetchingPosts(true)
+      try {
+        const res = await fetch(`/api/posts/user/${userName}`)
+        const data = await res.json()
+        if (data.error) {
+          return showToast("Error", data.error, "error")
+        }
+        setPosts(data.posts)
+      } catch (error) {
+        showToast("Error", error.message, "error")
+        setPosts([])
+      } finally {
+        setIsFetchingPosts(false)
       }
-      setPosts(data.posts)
-    } catch (error) {
-      showToast("Error", error.message, "error")
-      setPosts([])
-    } finally {
-      setIsFetchingPosts(false)
-    }
     }
 
     getPosts()

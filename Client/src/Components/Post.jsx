@@ -37,7 +37,7 @@ const Post = ({ post }) => {
     try {
       e.preventDefault()
       e.stopPropagation()
-      if(!window.confirm("Are you sure you want to delete this post?")) return
+      if (!window.confirm("Are you sure you want to delete this post?")) return
 
       const res = await fetch(`/api/posts/${post._id}`, {
         method: "DELETE",
@@ -46,7 +46,6 @@ const Post = ({ post }) => {
       if (data.error) return showToast("Error", data.error, "error")
       showToast("Success", data.message, "success")
       setPosts(posts.filter((p) => p._id !== post._id))
-      
     } catch (error) {
       showToast("Error", error.message, "error")
     }
@@ -137,12 +136,7 @@ const Post = ({ post }) => {
                 {formatDistanceToNow(new Date(post.createdAt))} ago
               </Text>
               {currentUser?._id === user?._id && (
-                <DeleteIcon
-                  size={20}
-                  onClick={
-                    handleDeletePost
-                  }
-                />
+                <DeleteIcon size={20} onClick={handleDeletePost} />
               )}
             </Flex>
           </Flex>
@@ -160,7 +154,7 @@ const Post = ({ post }) => {
           )}
 
           <Flex gap={3} my={1}>
-            <Actions post={post}/>
+            <Actions post={post} />
           </Flex>
         </Flex>
       </Flex>

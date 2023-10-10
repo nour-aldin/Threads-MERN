@@ -38,12 +38,12 @@ const CreatePost = () => {
   const showToast = useShowToast()
   const [isLoading, setIsLoading] = useState(false)
   const [posts, setPosts] = useRecoilState(postsAtom)
-  const {userName} = useParams()
+  const { userName } = useParams()
   const user = useRecoilState(userAtom)
 
   const handleTextChange = (e) => {
     const inputText = e.target.value
-    if(inputText.length > MAX_TEXT_LENGTH) {
+    if (inputText.length > MAX_TEXT_LENGTH) {
       const trancatedText = inputText.slice(0, MAX_TEXT_LENGTH)
       setPostText(trancatedText)
       setRemainingText(0)
@@ -51,12 +51,10 @@ const CreatePost = () => {
       setPostText(inputText)
       setRemainingText(MAX_TEXT_LENGTH - inputText.length)
     }
-
-
   }
 
   const handleCreatePost = async () => {
-    if(isLoading) return
+    if (isLoading) return
     setIsLoading(true)
     try {
       const res = await fetch("/api/posts/create", {
@@ -67,7 +65,7 @@ const CreatePost = () => {
         body: JSON.stringify({ text: postText, image: imgUrl }),
       })
       const data = await res.json()
-      if(data.error) {
+      if (data.error) {
         return showToast("Error", data.error, "error")
       }
       if (userName === user[0].userName) {
@@ -76,7 +74,6 @@ const CreatePost = () => {
       } else {
         showToast("Success", "Posted on your own page :)", "success")
       }
-
     } catch (error) {
       showToast("Error", error.message, "error")
     } finally {
@@ -85,7 +82,6 @@ const CreatePost = () => {
       setImgUrl("")
       onClose()
     }
-
   }
   return (
     <>
@@ -99,8 +95,6 @@ const CreatePost = () => {
       >
         <AddIcon />
       </Button>
-
-      
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -151,7 +145,12 @@ const CreatePost = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={handleCreatePost} isLoading={isLoading}>
+            <Button
+              colorScheme='blue'
+              mr={3}
+              onClick={handleCreatePost}
+              isLoading={isLoading}
+            >
               Post
             </Button>
           </ModalFooter>
