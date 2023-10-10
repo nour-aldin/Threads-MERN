@@ -19,6 +19,7 @@ import { useSetRecoilState } from "recoil"
 import authScreenAtom from "../atoms/authAtom"
 import useShowToast from "../Hooks/useShowToast"
 import userAtom from "../atoms/userAtom"
+import { useNavigate } from "react-router-dom"
 
 export default function LoginCard() {
   const [showPassword, setShowPassword] = useState(false)
@@ -30,6 +31,7 @@ export default function LoginCard() {
   const showToast = useShowToast()
   const setUser = useSetRecoilState(userAtom)
   const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate()
 
   const handleLogin = async () => {
     if (isLoading) return

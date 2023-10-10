@@ -9,7 +9,7 @@ export default defineConfig({
     // HANDEL CORS ERRORS
     proxy: {
       "/api": {
-        target: "https://threads-server.onrender.com",
+        target: "http://localhost:5000",
         changeOrigin: true,
         secure: false,
       },

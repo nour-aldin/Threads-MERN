@@ -32,11 +32,13 @@ mongoose
 
 app.use(
   cors({
-    origin: "https://threads-mern-one.vercel.app", // Replace with your frontend's URL
+    origin: "https://threads-817ba.web.app", // Replace with your frontend's URL
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true, // Enable passing of cookies, if necessary
   })
 )
+
+// app.use(cors())
 app.use(express.json({ limit: "50mb" })) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // to parse form data.
 app.use(cookieParser())
