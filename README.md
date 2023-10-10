@@ -16,8 +16,7 @@
 - Utilized Chakra UI for building user interface with modern responsive design.
 
 ## Login
-https://github.com/nour-aldin/Threads-MERN/assets/56984371/462c1833-e980-43e7-b49d-fae632f2b5fb
-
+https://github.com/nour-aldin/Threads-MERN/assets/56984371/d3b816c2-7cbe-4e9f-a992-217f4df3554e
 ## Register
 https://github.com/nour-aldin/Threads-MERN/assets/56984371/04c65165-c104-4fb9-9e4d-39704c2d05d3
 
